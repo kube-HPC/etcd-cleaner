@@ -2,6 +2,7 @@ const chai = require('chai');
 const { expect } = chai;
 const mockery = require('mockery');
 const sinon = require('sinon');
+const smock = require('./mocks/store-manager');
 
 describe('dummy test', () => {
     before(async () => {
@@ -14,9 +15,9 @@ describe('dummy test', () => {
         mockery.registerSubstitute('./lib/store/store-manager', `${process.cwd()}/tests/mocks/store-manager.js`);
     });
     it('clean objects', async () => {
+        const spyDelete = sinon.spy(smock, "deleteKey");
         const bootstrap = require('../bootstrap');
         await bootstrap.init();
-        const cleaner = require('../lib/cleaner/cleaner');
-        await cleaner.clean();
+        expect(spyDelete.callCount).to.equal(3);
     });
 });

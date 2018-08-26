@@ -23,7 +23,7 @@ class StateManager {
         }
     }
 
-    delete(key) {
+    deleteKey(key) {
         console.log(key);
     }
 }
