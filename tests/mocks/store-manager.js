@@ -20,6 +20,8 @@ class StateManager {
                 jobResults[0].value.timestamp = new Date();
                 jobResults[1].value.timestamp = new Date(2018, 1, 3, 10, 33, 30, 0);;
                 return jobResults
+            default:
+                return [];
         }
     }
 
