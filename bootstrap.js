@@ -10,12 +10,12 @@ const modules = [
 ];
 
 class Bootstrap {
-    async init() { // eslint-disable-line
+    async init() {
         try {
             this._handleErrors();
             log.info('running application in ' + configIt.env() + ' environment', { component: componentName.MAIN });
-            for (const m of modules) {// eslint-disable-line
-                await require(m).init(main, log);// eslint-disable-line
+            for (const m of modules) {
+                await require(m).init(main, log);
             }
             await cleaner.clean();
             return main;
@@ -26,14 +26,8 @@ class Bootstrap {
     }
 
     _onInitFailed(error) {
-        if (log) {
-            log.error(error.message, { component: componentName.MAIN }, error);
-            log.error(error);
-        }
-        else {
-            console.error(error.message); // eslint-disable-line
-            console.error(error); // eslint-disable-line
-        }
+        log.error(error.message, { component: componentName.MAIN }, error);
+        log.error(error);
         process.exit(1);
     }
 
