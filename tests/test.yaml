@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name:  cleaner
+spec:
+  template:
+    metadata:
+      name:  cleaner
+    spec:
+      containers:
+      - name: cleaner
+        image: hkube/etcd-cleaner:v1.1.9
+        env:
+        - name: OBJECT_EXPIRATION_DAYS
+          value: "1"
+      restartPolicy: Never
+  backoffLimit: 1
