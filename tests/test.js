@@ -2,7 +2,8 @@ const chai = require('chai');
 const { expect } = chai;
 const mockery = require('mockery');
 const sinon = require('sinon');
-const smock = require('./mocks/store-manager');
+const etcdMock = require('./mocks/etcd-store');
+const redisMock = require('./mocks/redis-store');
 
 describe('dummy test', () => {
     before(async () => {
@@ -11,13 +12,15 @@ describe('dummy test', () => {
             warnOnReplace: false,
             warnOnUnregistered: false
         });
-        mockery.registerSubstitute('../store/store-manager', `${process.cwd()}/tests/mocks/store-manager.js`);
-        mockery.registerSubstitute('./lib/store/store-manager', `${process.cwd()}/tests/mocks/store-manager.js`);
+        mockery.registerSubstitute('../store/etcd', `${process.cwd()}/tests/mocks/etcd-store.js`);
+        mockery.registerSubstitute('../store/redis', `${process.cwd()}/tests/mocks/redis-store.js`);
     });
     it('clean objects', async () => {
-        const spyDelete = sinon.spy(smock, "deleteKey");
+        const etcdSpy = sinon.spy(etcdMock, "deleteKey");
+        const redisSpy = sinon.spy(redisMock, "deleteKey");
         const bootstrap = require('../bootstrap');
         await bootstrap.init();
-        expect(spyDelete.callCount).to.equal(3);
+        expect(etcdSpy.callCount).to.equal(3);
+        expect(redisSpy.callCount).to.equal(1);
     });
 });
