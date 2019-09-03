@@ -31,7 +31,7 @@ class Bootstrap {
                 }
             }
             log.info(`finish cleaner with ${sources}`, { component });
-            // process.exit(0); // MAYBE AUTOCLEAN ON EXIT
+            setTimeout(() => process.exit(0), 3000);
         }
         catch (error) {
             this._onInitFailed(error);
