@@ -21,6 +21,6 @@ describe('dummy test', () => {
         const bootstrap = require('../bootstrap');
         await bootstrap.init();
         expect(etcdSpy.callCount).to.equal(3);
-        expect(redisSpy.callCount).to.equal(1);
+        expect(redisSpy.callCount).to.equal(2);
     });
 });

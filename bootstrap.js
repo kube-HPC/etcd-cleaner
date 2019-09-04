@@ -3,7 +3,8 @@ const Logger = require('@hkube/logger');
 const { main, logger } = configIt.load();
 const config = main;
 const log = new Logger(config.serviceName, logger);
-const component = require('./lib/consts/components').MAIN;
+const { components, sourcesList } = require('./lib/consts');
+const component = components.MAIN;
 
 class Bootstrap {
     async init() {
@@ -11,7 +12,7 @@ class Bootstrap {
             this._handleErrors();
             log.info(`running application with env: ${configIt.env()}, version: ${config.version}, node: ${process.versions.node}`, { component });
 
-            const sources = config.sources.replace(/\s/g, '').split(',').filter(s => s);
+            const sources = sourcesList.filter(s => config.sources.toLowerCase().includes(s));
 
             if (sources.length === 0) {
                 throw new Error('there are no sources to clean');
