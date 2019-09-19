@@ -1,24 +1,38 @@
 const configIt = require('@hkube/config');
 const Logger = require('@hkube/logger');
 const { main, logger } = configIt.load();
-const log = new Logger(main.serviceName, logger);
-const componentName = require('./common/consts/componentNames');
-const cleaner = require('./lib/cleaner/cleaner');
-const modules = [
-    './lib/store/store-manager',
-    './lib/cleaner/cleaner'
-];
+const config = main;
+const log = new Logger(config.serviceName, logger);
+const { components, sourcesList } = require('./lib/consts');
+const component = components.MAIN;
 
 class Bootstrap {
     async init() {
         try {
             this._handleErrors();
-            log.info('running application in ' + configIt.env() + ' environment', { component: componentName.MAIN });
-            for (const m of modules) {
-                await require(m).init(main, log);
+            log.info(`running application with env: ${configIt.env()}, version: ${config.version}, node: ${process.versions.node}`, { component });
+
+            const sources = sourcesList.filter(s => config.sources.toLowerCase().includes(s));
+
+            if (sources.length === 0) {
+                throw new Error('there are no sources to clean');
             }
-            await cleaner.clean();
-            return main;
+            log.info(`starting cleaner with ${sources}`, { component });
+
+            for (const source of sources) {
+                try {
+                    log.info(`loading ${source} cleaner`, { component });
+                    const cleaner = require(`./lib/cleaners/${source}`);
+                    log.info(`starting ${source} cleaner`, { component });
+                    await cleaner.clean(config, source);
+                    log.info(`finish ${source} cleaner`, { component });
+                }
+                catch (error) {
+                    log.error(error.message, { component }, error);
+                }
+            }
+            log.info(`finish cleaner with ${sources}`, { component });
+            setTimeout(() => process.exit(0), 3000);
         }
         catch (error) {
             this._onInitFailed(error);
@@ -26,31 +40,28 @@ class Bootstrap {
     }
 
     _onInitFailed(error) {
-        log.error(error.message, { component: componentName.MAIN }, error);
-        log.error(error);
+        log.error(error.message, { component }, error);
         process.exit(1);
     }
 
     _handleErrors() {
         process.on('exit', (code) => {
-            log.info('exit' + (code ? ' code ' + code : ''), { component: componentName.MAIN });
+            log.info(`exit code ${code}`, { component });
         });
         process.on('SIGINT', () => {
-            log.info('SIGINT', { component: componentName.MAIN });
-
-            process.exit(1);
+            log.info('SIGINT', { component });
+            process.exit(0);
         });
         process.on('SIGTERM', () => {
-            log.info('SIGTERM', { component: componentName.MAIN });
-            process.exit(1);
+            log.info('SIGTERM', { component });
+            process.exit(0);
         });
         process.on('unhandledRejection', (error) => {
-            log.error('unhandledRejection: ' + error.message, { component: componentName.MAIN }, error);
-            log.error(error);
+            log.error(`unhandledRejection: ${error.message}`, { component }, error);
+            process.exit(1);
         });
         process.on('uncaughtException', (error) => {
-            log.error('uncaughtException: ' + error.message, { component: componentName.MAIN }, error);
-            log.error(JSON.stringify(error));
+            log.error(`uncaughtException: ${error.message}`, { component }, error);
             process.exit(1);
         });
     }

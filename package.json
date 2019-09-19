@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "./node_modules/eslint/bin/eslint.js .",
     "test": "NODE_ENV=test ./node_modules/mocha/bin/_mocha tests --colors --recursive --exit",
-    "test:cov": "NODE_ENV=test ./node_modules/nyc/bin/nyc.js --exclude=bootstrap.js --reporter=html --reporter=text --reporter=lcov mocha tests --colors --recursive --exit",
+    "test:cov": "NODE_ENV=test ./node_modules/nyc/bin/nyc.js --include=lib --reporter=html --reporter=text --reporter=lcov mocha tests --colors --recursive --exit",
     "coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "start": "node app",
     "build": "./dockerfile/build.sh etcd-cleaner"
@@ -24,14 +24,14 @@
     "hkube",
     "hkube-core"
   ],
-  "author": "bahalool",
+  "author": "Hkube",
   "license": "MIT",
   "dependencies": {
     "@hkube/config": "^2.0.7",
     "@hkube/etcd": "^5.0.3",
     "@hkube/logger": "^1.0.15",
-    "moment": "^2.24.0",
-    "nyc": "^14.1.1"
+    "@hkube/redis-utils": "^1.0.3",
+    "moment": "^2.24.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -42,6 +42,7 @@
     "eslint-plugin-import": "^2.17.2",
     "mocha": "^6.1.4",
     "mockery": "^2.1.0",
+    "nyc": "^14.1.1",
     "pre-commit": "^1.2.2",
     "sinon": "^7.3.2",
     "uuid": "^3.3.2"
