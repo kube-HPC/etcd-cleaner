@@ -1,6 +1,6 @@
 {
   "name": "etcd-cleaner",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "etcd cleaner",
   "main": "app.js",
   "directories": {
