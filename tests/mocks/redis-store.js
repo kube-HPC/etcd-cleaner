@@ -1,9 +1,8 @@
-
 class StateManager {
     async init(options) {
     }
 
-    async* getData(path){
+    async* getData(path) {
         switch (path) {
             case "/pipeline-driver/graph/*":
                 yield require('./graph.json');
@@ -17,7 +16,7 @@ class StateManager {
         }
     }
     getKeys(path) {
-            return {[Symbol.asyncIterator]: () => this.getData(path)}
+        return { [Symbol.asyncIterator]: () => this.getData(path) }
     }
 
     deleteKey(key) {
