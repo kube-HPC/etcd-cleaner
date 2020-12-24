@@ -10,7 +10,7 @@ module.exports = {
     ],
     "parserOptions": {
         "sourceType": "module",
-        "ecmaVersion": 2018
+        "ecmaVersion": 2020
     },
     "rules": {
         "no-param-reassign": "error",
@@ -32,6 +32,8 @@ module.exports = {
         "arrow-body-style": "off",
         "class-methods-use-this": "off",
         "no-unused-expressions": 0,
-        "arrow-parens": "off"
+        "arrow-parens": "off",
+        "no-restricted-syntax": "off",
+        "no-await-in-loop": "off"
     }
 };

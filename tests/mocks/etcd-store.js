@@ -1,4 +1,3 @@
-
 class StateManager {
     async init(options) {
     }
