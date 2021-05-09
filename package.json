@@ -1,6 +1,6 @@
 {
   "name": "etcd-cleaner",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "etcd and redis cleaner",
   "main": "app.js",
   "directories": {
