@@ -4,6 +4,7 @@ const config = {};
 config.version = packageJson.version;
 config.serviceName = packageJson.name;
 config.objectExpiration = process.env.OBJECT_EXPIRATION_DAYS || 5;
+config.redisObjectExpiration = process.env.REDIS_EXPIRATION_DAYS || 5;
 config.sources = process.env.CLEAN_SOURCES || 'Etcd | Redis';
 
 const useSentinel = !!process.env.REDIS_SENTINEL_SERVICE_HOST;
