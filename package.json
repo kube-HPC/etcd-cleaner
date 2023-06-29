@@ -27,7 +27,7 @@
   "author": "Hkube",
   "license": "MIT",
   "dependencies": {
-    "@hkube/config": "^2.0.10",
+    "@hkube/config": "^2.0.11",
     "@hkube/etcd": "^5.1.2",
     "@hkube/logger": "^1.0.27",
     "@hkube/redis-utils": "^1.0.3",
