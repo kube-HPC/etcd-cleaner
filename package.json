@@ -29,7 +29,7 @@
   "dependencies": {
     "@hkube/config": "^2.0.10",
     "@hkube/etcd": "^5.1.2",
-    "@hkube/logger": "^1.0.27",
+    "@hkube/logger": "^1.0.31",
     "@hkube/redis-utils": "^1.0.3",
     "moment": "^2.29.1"
   },
