@@ -31,7 +31,7 @@
     "@hkube/etcd": "^5.1.2",
     "@hkube/logger": "^1.0.27",
     "@hkube/redis-utils": "^1.0.3",
-    "moment": "^2.29.1"
+    "moment": "^2.29.4"
   },
   "devDependencies": {
     "chai": "^4.2.0",
